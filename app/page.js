@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Sidebar from "../components/Sidebar";
 import PlantCard from "../components/PlantCard";
-import Butterflies from "../components/Butterflies";
+import PremiumNature from "../components/PremiumNature";
 import { plants } from "../lib/plants";
 
 export default function Home() {
@@ -20,8 +20,8 @@ export default function Home() {
         }}
       >
 
-        {/* Butterfly effect */}
-        <Butterflies />
+        {/* Premium Nature Effects */}
+        <PremiumNature />
 
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/50"></div>
