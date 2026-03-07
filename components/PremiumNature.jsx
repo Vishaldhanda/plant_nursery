@@ -1,57 +1,75 @@
 "use client";
 
-import { Parallax } from "react-scroll-parallax";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Lottie from "lottie-react";
+import butterfly from "../public/animations/butterfly.json";
 
 export default function PremiumNature() {
 
-  const pollen = Array.from({ length: 25 });
-  const butterflies = Array.from({ length: 4 });
+  const [butterflies, setButterflies] = useState([]);
+
+  useEffect(() => {
+
+    const spawnButterfly = () => {
+
+      const newButterfly = {
+        id: Math.random(),
+        top: Math.random() * 90,
+        left: -10,                       // start outside screen
+        size: 35 + Math.random() * 25,   // size variation
+        duration: 12 + Math.random() * 8
+      };
+
+      setButterflies(prev => [...prev, newButterfly]);
+
+      // remove after animation
+      setTimeout(() => {
+        setButterflies(prev => prev.slice(1));
+      }, newButterfly.duration * 1000);
+
+    };
+
+    const interval = setInterval(spawnButterfly, 3000);
+
+    return () => clearInterval(interval);
+
+  }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-50">
 
-      {/* PARALLAX LEAVES */}
-      <Parallax speed={-10}>
-        <div className="absolute top-10 left-10 text-4xl animate-leaf">🍃</div>
-      </Parallax>
+      {butterflies.map((b) => (
 
-      <Parallax speed={8}>
-        <div className="absolute bottom-10 right-10 text-4xl animate-leaf">🍃</div>
-      </Parallax>
-
-
-      {/* BUTTERFLIES */}
-      {butterflies.map((_, i) => (
-        <div
-          key={i}
-          className="butterfly"
+        <motion.div
+          key={b.id}
           style={{
-            left: `${20 + i * 15}%`,
-            animationDelay: `${i * 3}s`
+            position: "absolute",
+            top: `${b.top}%`,
+            left: `${b.left}%`,
+            width: `${b.size}px`
+          }}
+
+          animate={{
+            x: [0, 300, 600, 900, 1200],
+            y: [0, -80, 40, -60, 20],
+            rotate: [0, 15, -10, 20, -15]
+          }}
+
+          transition={{
+            duration: b.duration,
+            ease: "easeInOut"
           }}
         >
-          🦋
-        </div>
+
+          <Lottie
+            animationData={butterfly}
+            loop={true}
+          />
+
+        </motion.div>
+
       ))}
-
-
-      {/* POLLEN PARTICLES */}
-      {pollen.map((_, i) => (
-        <span
-          key={i}
-          className="pollen"
-          style={{
-            left: `${Math.random() * 100}%`,
-            animationDelay: `${i * 0.5}s`,
-            animationDuration: `${10 + Math.random() * 10}s`
-          }}
-        />
-      ))}
-
-
-      {/* WIND SWAY PLANTS */}
-      <div className="absolute bottom-0 left-20 text-6xl sway">🌿</div>
-      <div className="absolute bottom-0 right-20 text-6xl sway">🌿</div>
 
     </div>
   );

@@ -7,8 +7,12 @@ import PremiumNature from "../components/PremiumNature";
 import { plants } from "../lib/plants";
 
 export default function Home() {
+
   return (
-    <main>
+    <main className="relative">
+
+      {/* Premium Nature Effects (global floating butterflies etc.) */}
+      <PremiumNature />
 
       {/* HERO SECTION */}
       <section
@@ -20,13 +24,10 @@ export default function Home() {
         }}
       >
 
-        {/* Premium Nature Effects */}
-        <PremiumNature />
-
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/50"></div>
 
-        {/* Hero content */}
+        {/* Hero Content */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -51,19 +52,19 @@ export default function Home() {
       </section>
 
 
-      {/* MAIN SECTION */}
-      <section className="bg-gray-100">
+      {/* MAIN CONTENT */}
+      <section className="bg-gray-100 py-12">
 
-        <div className="max-w-7xl mx-auto flex">
+        <div className="max-w-7xl mx-auto flex gap-10 px-6">
 
-          {/* LEFT SIDEBAR */}
-          <div className="w-80 p-6 sticky top-20 h-fit">
+          {/* SIDEBAR */}
+          <div className="w-80 sticky top-20 h-fit">
             <Sidebar />
           </div>
 
 
-          {/* RIGHT CONTENT */}
-          <div className="flex-1 p-6">
+          {/* PLANT GRID */}
+          <div className="flex-1">
 
             <h2 className="text-3xl font-bold text-green-700 mb-6">
               Featured Plants
@@ -88,4 +89,5 @@ export default function Home() {
 
     </main>
   );
+
 }
